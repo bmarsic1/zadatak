@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+
+<h1>Submit Form</h1>
+
+<form action="#" th:action="@{/app/form}" th:object="${flightReq}" method="post">
+
+    <label for="Origin iata">Origin IATA:</label>
+    <input type="text" th:field="*{originLocationCode}" id="Origin iata" minlength="3" maxlength="3" required><br><br>
+
+    <label for="destinationIata">Destination IATA:</label>
+    <input type="text" th:field="*{destinationLocationCode}" id="destinationIata" minlength="3" maxlength="3"  required><br><br>
+
+    <label for="departure">Departure Date:</label>
+    <input type="date" th:field="*{departureDate}" id="departure" placeholder="yyyy-MM-dd" required><br><br>
+
+    <label for="arrival">Return Date:</label>
+    <input type="date" th:field="*{returnDate}" id="arrival" placeholder="yyyy-MM-dd"><br><br>
+
+    <label for="numOfPassengers">Adults:</label>
+    <input type="number" th:field="*{adults}" id="numOfPassengers" min="1" required><br><br>
+
+    <label for="valute">Currency:</label>
+    <input type="text" th:field="*{currencyCode}" id="valute" minlength="3" maxlength="3" ><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+
+
+
+<div th:if="${flights!=null}">
+    <h1>Letovi</h1>
+<table border="2">
+    <thead>
+    <tr>
+        <th>Polazni aerodrom</th>
+        <th>Odredišni aerodrom</th>
+        <th>Datum polaska</th>
+        <th>Datum povratka</th>
+        <th>Broj presjedanja</th>
+        <th>Broj presjedanja kod povratka</th>
+        <th>Broj putnika</th>
+        <th>Valuta</th>
+        <th>Ukupna cijena</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="flight : ${flights}">
+        <td th:text="${flight.flightReq.getOriginLocationCode()}"></td>
+        <td th:text="${flight.flightReq.getDestinationLocationCode}"></td>
+        <td th:text="${flight.flightReq.getDepartureDate}"></td>
+        <td th:text="${flight.flightReq.getReturnDate}"></td>
+        <td th:text="${flight.getNumOfTransfers}"></td>
+        <td th:text="${flight.getNumOfTransfersBack}"></td>
+        <td th:text="${flight.flightReq.getAdults}"></td>
+        <td th:text="${flight.flightReq.getCurrencyCode}"></td>
+        <td th:text="${flight.getPrice}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
